@@ -6,35 +6,48 @@ import { Features } from "@/components/Features";
 import { Cases } from "@/components/Cases";
 import { Partners } from "@/components/Partners";
 
-// --- 自动获取产品数据逻辑 START ---
-// 1. 获取 src/pages/products/ 下所有 markdown 文件
-const allProducts = await Astro.glob('./products/*.md');
+// --- 修改部分 START ---
+import { getCollection } from 'astro:content';
 
-// 2. 筛选出 frontmatter 中标记了 feature: true 的产品
-// 3. 格式化数据以传给组件
+// 1. 获取产品数据 
+const allProducts = await getCollection('products');
 const featuredProducts = allProducts
-  .filter((post) => post.frontmatter.feature === true)
-  .sort((a, b) => (a.frontmatter.order || 99) - (b.frontmatter.order || 99)) // 可选：按 order 排序
-  .map((post) => ({
-    title: post.frontmatter.title,
-    description: post.frontmatter.description,
-    image: post.frontmatter.image, // 对应 markdown 里的 image 字段
-    url: post.url || '#', // Astro 自动生成的页面路径
+  .filter((item) => item.data.feature === true)
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((item) => ({
+    title: item.data.title,
+    description: item.data.description,
+    image: item.data.image,
+    url: `/products/${item.id}`,
+    id: item.id 
   }));
-// --- 自动获取产品数据逻辑 END ---
+
+// 2. 获取案例数据逻辑
+const allCases = await getCollection('cases');
+const featuredCases = allCases
+  // 筛选：必须包含 cases: true 字段
+  .filter((item) => item.data.cases === true) 
+  // 排序：按 order 从小到大
+  .sort((a, b) => a.data.order - b.data.order)
+  // 映射：转换为组件需要的格式
+  .map((item) => ({
+    title: item.data.title,
+    category: item.data.category,
+    description: item.data.description,
+    image: item.data.image,
+    url: `/cases/${item.id}`
+  }));
 ---
 
 <Layout title="Astro Tech - 构建未来智能架构">
   <main class="bg-black w-full min-h-screen">
     <Navbar client:load />
-    
     <HeroSection client:load />
     
+    {/* 这里的 Features 组件也需要微调以支持 id 字段，见下一步 */}
     <Features client:load products={featuredProducts} />
     
-    <Cases client:load />
-
+    <Cases client:load items={featuredCases} />
     <Partners client:load />
-    
-    </main>
+  </main>
 </Layout>
