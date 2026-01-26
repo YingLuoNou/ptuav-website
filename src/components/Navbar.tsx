@@ -153,6 +153,7 @@ export const Navbar = () => {
     { name: "首页", link: "/" },
     { name: "产品中心", link: "/products" },
     { name: "合作案例", link: "/cases" },
+    { name: "技术文档", link: "http://192.168.2.110:4322" },
     { name: "关于我们", link: "/about" },
   ];
 

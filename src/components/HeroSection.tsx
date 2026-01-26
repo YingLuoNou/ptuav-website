@@ -50,7 +50,7 @@ export default function HeroSection() {
               </a>
               {/* 修改点：次要按钮边框色和文字色适配 */}
               <a 
-                href="/contact"
+                href="http://192.168.2.110:4322"
                 className="px-8 py-4 rounded-lg border-2 dark:border-neutral-700 border-neutral-300 dark:text-neutral-300 text-neutral-700 font-bold text-base dark:hover:bg-neutral-800 hover:bg-neutral-100 dark:hover:text-white transition-all inline-flex items-center justify-center"
               >
                 技术文档

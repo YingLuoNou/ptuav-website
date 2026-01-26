@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import { Navbar } from "@/components/Navbar";
+import Footer from "@/components/Footer.astro";
 interface Props {
 	title: string;
 }
@@ -55,8 +56,9 @@ const { title } = Astro.props;
         </script>
 	</head>
 	<body class="bg-white text-neutral-900 dark:bg-black dark:text-neutral-200 antialiased selection:bg-blue-500 selection:text-white">
-        <Navbar client:load transition:persist />
+        <Navbar client:load transition:persist transition:name="main-nav" />
         <slot />
+		<Footer />
 	</body>
 </html>
 
