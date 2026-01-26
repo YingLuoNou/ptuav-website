@@ -22,16 +22,19 @@ const formatDate = (date: Date | string) => {
 };
 ---
 
-<Layout title="合作案例 - Astro Tech">
-  <main class="bg-black min-h-screen pt-24 pb-20">
+<Layout title="Phoenixtech - 合作案例">
+  {/* 修改点：全局背景色适配，增加 transition-colors 实现平滑切换 */}
+  <main class="bg-white dark:bg-black min-h-screen pt-24 pb-20 transition-colors duration-300">
     
     <div class="max-w-5xl mx-auto px-4">
       <div class="mb-16">
-        <h1 class="text-4xl md:text-5xl font-bold text-white mb-6 border-l-4 border-blue-600 pl-6">
-          成功案例
+        {/* 修改点：标题颜色适配 (明亮: neutral-900 / 暗色: white) */}
+        <h1 class="text-4xl md:text-5xl font-bold text-neutral-900 dark:text-white mb-6 border-l-4 border-blue-600 pl-6">
+          合作案例
         </h1>
-        <p class="text-neutral-400 text-lg pl-7 max-w-2xl">
-          探索我们如何通过前沿技术赋能各行各业，从数字化转型到智能架构的落地实践。
+        {/* 修改点：副标题颜色适配 (明亮: neutral-600 / 暗色: neutral-400) */}
+        <p class="text-neutral-600 dark:text-neutral-400 text-lg pl-7 max-w-2xl">
+          凌空视角，洞察未来：科研无人机跨领域协作实录。
         </p>
       </div>
 
@@ -39,7 +42,11 @@ const formatDate = (date: Date | string) => {
         {sortedCases.map((item) => (
           <a 
             href={`/cases/${item.id}`}
-            class="group block relative bg-neutral-900/40 border border-neutral-800 rounded-2xl overflow-hidden hover:border-blue-500/30 hover:bg-neutral-900/60 transition-all duration-300"
+            /* 修改点：卡片容器背景与边框适配 
+               - 背景：明亮模式下使用 bg-neutral-50 (微灰)，暗色模式保持半透明黑
+               - 边框：明亮模式下使用浅灰 border-neutral-200
+            */
+            class="group block relative bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden hover:border-blue-500/30 hover:bg-neutral-100 dark:hover:bg-neutral-900/60 transition-all duration-300"
           >
             <div class="flex flex-col md:flex-row">
               {/* 左侧：图片区域 (固定宽度 + 响应式) */}
@@ -49,15 +56,19 @@ const formatDate = (date: Date | string) => {
                   alt={item.data.title}
                   class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                {/* 图片上的光泽遮罩 */}
-                <div class="absolute inset-0 bg-gradient-to-t from-neutral-900 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-neutral-900/50 opacity-60" />
+                {/* 修改点：图片遮罩渐变色适配
+                   - 移动端 (inset-0 bg-gradient-to-t): 底部渐变色从卡片背景色 (neutral-50/neutral-900) 开始，确保无缝衔接
+                   - 桌面端 (md:bg-gradient-to-r): 右侧边缘增加柔和过渡
+                */}
+                <div class="absolute inset-0 bg-gradient-to-t from-neutral-50 dark:from-neutral-900 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-neutral-50/50 md:dark:to-neutral-900/50 opacity-60" />
               </div>
 
               {/* 右侧：内容区域 */}
               <div class="p-6 md:p-8 flex flex-col justify-center flex-1">
                 {/* 顶部元数据：分类 + 日期 */}
                 <div class="flex items-center justify-between mb-3 text-xs md:text-sm">
-                  <span class="px-3 py-1 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full font-medium tracking-wide">
+                  {/* 修改点：标签文字颜色适配 (明亮模式加深为 blue-600 以提高对比度) */}
+                  <span class="px-3 py-1 bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 rounded-full font-medium tracking-wide">
                     {item.data.category}
                   </span>
                   <time class="text-neutral-500 font-mono">
@@ -65,18 +76,18 @@ const formatDate = (date: Date | string) => {
                   </time>
                 </div>
 
-                {/* 标题 */}
-                <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
+                {/* 修改点：文章标题颜色适配 */}
+                <h2 class="text-2xl font-bold text-neutral-900 dark:text-white mb-3 group-hover:text-blue-400 transition-colors">
                   {item.data.title}
                 </h2>
 
-                {/* 简介 */}
-                <p class="text-neutral-400 line-clamp-2 md:line-clamp-3 leading-relaxed mb-6">
+                {/* 修改点：文章简介颜色适配 */}
+                <p class="text-neutral-600 dark:text-neutral-400 line-clamp-2 md:line-clamp-3 leading-relaxed mb-6">
                   {item.data.description}
                 </p>
 
-                {/* 底部：阅读更多箭头 */}
-                <div class="flex items-center text-sm font-semibold text-white mt-auto">
+                {/* 修改点：底部链接文字颜色适配 */}
+                <div class="flex items-center text-sm font-semibold text-neutral-900 dark:text-white mt-auto">
                   阅读完整案例
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />

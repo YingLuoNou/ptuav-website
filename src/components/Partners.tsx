@@ -14,8 +14,14 @@ export function Partners() {
   }));
 
   return (
-    <section className="py-20 rounded-md flex flex-col antialiased bg-black dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
-        <h2 className="text-2xl md:text-3xl font-bold text-center text-neutral-400 mb-10">
+    /* 修改点：
+       1. 背景色：从 bg-black 改为 bg-white dark:bg-black
+       2. 网格背景：增加 bg-grid-black/[0.03] 以适配明亮模式，并保持暗色模式下的网格
+       3. 增加 transition-colors 确保切换平滑
+    */
+    <section className="py-20 rounded-md flex flex-col antialiased bg-white dark:bg-black bg-grid-black/[0.03] dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden transition-colors duration-300">
+        {/* 修改点：标题颜色从 text-neutral-400 改为适配明亮的 text-neutral-500 和暗色的 text-neutral-400 */}
+        <h2 className="text-2xl md:text-3xl font-bold text-center text-neutral-500 dark:text-neutral-400 mb-10 transition-colors">
           合作伙伴
         </h2>
       <InfiniteMovingCards

@@ -14,26 +14,34 @@ const { Content } = await render(entry);
 ---
 
 <Layout title={`${entry.data.title} - Astro Tech`}>
-  <main class="bg-black min-h-screen">
+  {/* 修改点：页面背景色适配 bg-white dark:bg-black */}
+  <main class="bg-white dark:bg-black min-h-screen transition-colors duration-300">
 
     {/* Hero 区域：背景图 + 标题 */}
     <div class="relative h-[60vh] w-full flex items-center justify-center overflow-hidden">
-      {/* 背景图处理：遮罩加深，保证文字清晰 */}
+      {/* 背景图处理 */}
       <div class="absolute inset-0 z-0">
         <img 
           src={entry.data.image} 
           alt="About Background" 
           class="w-full h-full object-cover opacity-50"
         />
-        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black"></div>
+        {/* 修改点：渐变遮罩适配
+            - 明亮模式：从半透明白 -> 纯白 (from-white/70 ... to-white)
+            - 暗色模式：从半透明黑 -> 纯黑 (dark:from-black/70 ... dark:to-black)
+            这样底部才能完美融合到 main 的背景色中
+        */}
+        <div class="absolute inset-0 bg-gradient-to-b from-white/70 via-white/50 to-white dark:from-black/70 dark:via-black/50 dark:to-black"></div>
       </div>
 
       {/* 文字内容 */}
       <div class="relative z-10 text-center px-4 max-w-4xl mx-auto mt-20">
-        <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
+        {/* 修改点：大标题颜色适配 */}
+        <h1 class="text-5xl md:text-7xl font-bold text-neutral-900 dark:text-white mb-6 tracking-tight">
           {entry.data.title}
         </h1>
-        <p class="text-xl md:text-2xl text-neutral-300 font-light leading-relaxed">
+        {/* 修改点：副标题颜色适配 */}
+        <p class="text-xl md:text-2xl text-neutral-600 dark:text-neutral-300 font-light leading-relaxed">
           {entry.data.subtitle}
         </p>
       </div>
@@ -41,36 +49,49 @@ const { Content } = await render(entry);
 
     {/* 文章内容区域 */}
     <div class="max-w-4xl mx-auto px-6 pb-24">
-      <article class="prose prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-p:text-neutral-400 prose-p:leading-8 prose-li:text-neutral-400 prose-strong:text-white prose-strong:font-semibold">
+      {/* 修改点：Prose (排版) 插件适配
+          - prose: 启用默认排版 (明亮模式)
+          - dark:prose-invert: 启用反色排版 (暗色模式)
+          - 手动指定段落(p)、列表(li)、粗体(strong)在两种模式下的颜色
+      */}
+      <article class="prose dark:prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-p:text-neutral-600 dark:prose-p:text-neutral-400 prose-p:leading-8 prose-li:text-neutral-600 dark:prose-li:text-neutral-400 prose-strong:text-neutral-900 dark:prose-strong:text-white prose-strong:font-semibold">
         <Content />
       </article>
-      
-      {/* 底部装饰线 */}
-      <div class="mt-16 pt-8 border-t border-neutral-800 text-center">
-        <p class="text-neutral-500 italic text-sm">
-          Astro Tech — Constructing the Architecture of Future Intelligence.
-        </p>
-      </div>
     </div>
   </main>
 </Layout>
 
 <style>
   /* 自定义 Markdown 样式增强 */
-  /* 让 h2 (我们的使命等) 更像科技小标题 */
+  
+  /* 修改点：CSS 颜色适配策略
+     使用 :global(article h2) 设置默认(明亮)颜色
+     使用 :global(.dark article h2) 设置暗色模式颜色
+  */
+
+  /* h2 适配 */
   :global(article h2) {
     font-size: 2rem;
-    color: white;
+    color: #171717; /* neutral-900 */
     margin-top: 3rem;
     margin-bottom: 1.5rem;
-    border-left: 4px solid #3b82f6; /* 蓝色竖线装饰 */
+    border-left: 4px solid #3b82f6; /* 蓝色竖线装饰保持不变 */
     padding-left: 1rem;
+    transition: color 0.3s;
+  }
+  :global(.dark article h2) {
+    color: white;
   }
   
+  /* h3 适配 */
   :global(article h3) {
     font-size: 1.5rem;
-    color: #e5e5e5;
+    color: #404040; /* neutral-700 */
     margin-top: 2rem;
+    transition: color 0.3s;
+  }
+  :global(.dark article h3) {
+    color: #e5e5e5;
   }
 
   :global(article ul) {

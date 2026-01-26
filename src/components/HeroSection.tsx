@@ -8,7 +8,10 @@ const heroImage = "/products/test2.png";
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden bg-black">
+    <section className="h-screen w-full dark:bg-black bg-white dark:bg-grid-white/[0.2] bg-grid-black/[0.05] relative flex items-center justify-center transition-colors duration-300">
+      {/* 动态背景遮罩：根据主题切换透明度方向 */}
+      <div className="absolute inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+      
       {/* 背景网格特效 */}
       <div className="absolute inset-0 pointer-events-none">
         <GridBackground />
@@ -26,24 +29,32 @@ export default function HeroSection() {
             className="flex flex-col justify-center text-left"
           >
             <h2 className="text-sm md:text-base font-bold tracking-widest text-blue-500 uppercase mb-4">
-              ► NEXT-GEN INFRASTRUCTURE
+              ► AERIAL INTELLIGENCE
             </h2>
-            <h1 className="text-5xl md:text-7xl font-extrabold bg-clip-text text-transparent bg-gradient-to-br from-white via-neutral-200 to-neutral-500 leading-tight mb-6">
-              Astro Tech <br />
-              <span className="text-4xl md:text-6xl">构建未来智能架构</span>
+            {/* 修改点：渐变色适配。明亮模式下从深灰色到更深的灰色，暗色模式保持白到灰的渐变 */}
+            <h1 className="text-5xl md:text-7xl font-extrabold bg-clip-text text-transparent bg-gradient-to-br dark:from-white dark:via-neutral-200 dark:to-neutral-500 from-neutral-900 via-neutral-700 to-neutral-500 leading-tight mb-6">
+              Phoenixtech <br />
+              <span className="text-4xl md:text-6xl">翎霄科技</span>
             </h1>
-            <p className="text-neutral-400 text-lg md:text-xl max-w-xl mb-10 leading-relaxed">
-              我们提供全球领先的 AI 算力芯片与云原生解决方案，打破算力瓶颈，
-              助力企业在数字化浪潮中实现指数级增长。
+            {/* 修改点：文字颜色从固定 text-neutral-400 改为明暗适配 */}
+            <p className="dark:text-neutral-400 text-neutral-600 text-lg md:text-xl max-w-xl mb-10 leading-relaxed">
+              提供高精度、高稳定的科研级无人机平台，以卓越的感测技术与自动化作业流，
+              为无人机机构解锁各种需求的定制方案。
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <button className="px-8 py-4 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-base transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_35px_rgba(37,99,235,0.5)]">
+              <a 
+              href="/products"
+              className="px-8 py-4 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-base transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_35px_rgba(37,99,235,0.5)] inline-flex items-center justify-center" >
                 探索产品
-              </button>
-              <button className="px-8 py-4 rounded-lg border-2 border-neutral-700 text-neutral-300 font-bold text-base hover:bg-neutral-800 hover:text-white transition-all">
-                技术咨询
-              </button>
+              </a>
+              {/* 修改点：次要按钮边框色和文字色适配 */}
+              <a 
+                href="/contact"
+                className="px-8 py-4 rounded-lg border-2 dark:border-neutral-700 border-neutral-300 dark:text-neutral-300 text-neutral-700 font-bold text-base dark:hover:bg-neutral-800 hover:bg-neutral-100 dark:hover:text-white transition-all inline-flex items-center justify-center"
+              >
+                技术文档
+              </a>
             </div>
           </motion.div>
 
@@ -62,8 +73,8 @@ export default function HeroSection() {
                     alt="Astro Tech AI Chip Processor" 
                     className="w-full h-auto object-contain rounded-2xl pointer-events-none relative z-10 "
                 />
-                {/* 底部发光光晕，增强科技感 */}
-                <div className="absolute -inset-4 bg-blue-600/20 blur-3xl rounded-full -z-10"></div>
+                {/* 修改点：底部发光光晕在明亮模式下降低不透明度，防止过冲 */}
+                <div className="absolute -inset-4 dark:bg-blue-600/20 bg-blue-400/10 blur-3xl rounded-full -z-10"></div>
             </div>
           </motion.div>
         </div>

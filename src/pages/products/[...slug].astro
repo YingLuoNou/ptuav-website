@@ -1,8 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-// 1. 引入导航栏组件
-import { Navbar } from "@/components/Navbar";
+
 
 export async function getStaticPaths() {
   const products = await getCollection('products');
@@ -17,16 +16,15 @@ const { product } = Astro.props as { product: any };
 const { Content } = await render(product);
 ---
 
-<Layout title={product.data.title}>
+<Layout title=`${product.data.title} - 产品详情``>
   
-  {/* 2. 在这里放置导航栏，并开启 client:load 以支持交互（如滚动变色） */}
-  <Navbar client:load />
-
-  <article class="min-h-screen bg-black pt-32 pb-20 px-6">
+  {/* 修改点：背景色适配 bg-white dark:bg-black, 增加 transition-colors */}
+  <article class="min-h-screen bg-white dark:bg-black pt-32 pb-20 px-6 transition-colors duration-300">
     <div class="max-w-4xl mx-auto">
 
       {/* 产品大图 */}
-      <div class="relative w-full h-[400px] mb-10 rounded-2xl overflow-hidden border border-white/10">
+      {/* 修改点：边框适配 border-neutral-200 dark:border-white/10 */}
+      <div class="relative w-full h-[400px] mb-10 rounded-2xl overflow-hidden border border-neutral-200 dark:border-white/10">
         <img 
           src={product.data.image} 
           alt={product.data.title} 
@@ -34,24 +32,35 @@ const { Content } = await render(product);
           /* 如果您后续想加回动画，可以保留这个 transition:name，否则它没有任何副作用 */
           transition:name={`image-${product.id}`} 
         />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        {/* 修改点：渐变遮罩适配
+            - 明亮模式：from-black/20 (非常淡的阴影，避免在白底上显脏)
+            - 暗色模式：from-black/80 (保持原有的深邃感)
+        */}
+        <div class="absolute inset-0 bg-gradient-to-t from-black/20 dark:from-black/80 via-transparent to-transparent"></div>
       </div>
 
       {/* 标题 */}
+      {/* 修改点：文字颜色适配 text-neutral-900 dark:text-white */}
       <h1 
-        class="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight"
+        class="text-4xl md:text-6xl font-bold text-neutral-900 dark:text-white mb-6 tracking-tight"
         transition:name={`title-${product.id}`}
       >
         {product.data.title}
       </h1>
 
       {/* 描述 */}
-      <p class="text-xl text-neutral-400 mb-10 border-l-4 border-blue-500 pl-4">
+      {/* 修改点：文字颜色适配 text-neutral-600 dark:text-neutral-400 */}
+      <p class="text-xl text-neutral-600 dark:text-neutral-400 mb-10 border-l-4 border-blue-500 pl-4">
         {product.data.description}
       </p>
 
       {/* Markdown 正文 */}
-      <div class="prose prose-invert prose-lg max-w-none text-neutral-300">
+      {/* 修改点：
+          - prose: 启用明亮模式默认排版 (深色字)
+          - dark:prose-invert: 启用暗色模式反色排版 (浅色字)
+          - text-neutral-600 / dark:text-neutral-300: 显式覆盖基础文本颜色
+      */}
+      <div class="prose dark:prose-invert prose-lg max-w-none text-neutral-600 dark:text-neutral-300">
         <Content />
       </div>
 

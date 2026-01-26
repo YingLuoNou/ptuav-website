@@ -62,20 +62,23 @@ Object.keys(productsByCategory).forEach(cat => {
 const filterButtons = ["全部", ...finalCategories];
 ---
 
-<Layout title="产品中心 - Astro Tech">
-  <main class="bg-black min-h-screen pt-24 pb-20">
+<Layout title="Phoenixtech - 产品中心">
+  {/* 修改点：全局背景色适配，增加 transition-colors 实现平滑切换 */}
+  <main class="bg-white dark:bg-black min-h-screen pt-24 pb-20 transition-colors duration-300">
     
     <div class="max-w-7xl mx-auto px-4">
       <div class="text-center mb-12">
-        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 font-sans tracking-tight">产品中心</h1>
-        <p class="text-neutral-500 max-w-2xl mx-auto">汇聚前沿科技，提供多维度的工业级巡检与飞行解决方案</p>
+        {/* 修改点：主标题颜色适配 text-neutral-900 dark:text-white */}
+        <h1 class="text-4xl md:text-5xl font-bold text-neutral-900 dark:text-white mb-4 font-sans tracking-tight">产品中心</h1>
+        {/* 修改点：副标题颜色适配 */}
+        <p class="text-neutral-600 dark:text-neutral-500 max-w-2xl mx-auto">汇聚前沿科技，提供多维度的工业级巡检与飞行解决方案</p>
       </div>
 
       <div class="flex flex-wrap justify-center gap-4 mb-16" id="category-filters">
         {filterButtons.map((cat) => (
           <button
             data-category={cat}
-            class="filter-btn px-6 py-2 rounded-full border border-neutral-800 text-neutral-400 text-sm transition-all duration-300 hover:border-blue-500 hover:text-white data-[active=true]:bg-blue-600 data-[active=true]:border-blue-600 data-[active=true]:text-white"
+            class="filter-btn px-6 py-2 rounded-full border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 text-sm transition-all duration-300 hover:border-blue-500 hover:text-blue-600 dark:hover:text-white data-[active=true]:bg-blue-600 data-[active=true]:border-blue-600 data-[active=true]:text-white"
             data-active={cat === "全部" ? "true" : "false"}
           >
             {cat}
@@ -93,11 +96,13 @@ const filterButtons = ["全部", ...finalCategories];
             >
               {/* 分类标题分隔线 */}
               <div class="flex items-center justify-center mb-8 opacity-80">
-                <div class="h-[1px] w-12 bg-neutral-700"></div>
-                <h2 class="mx-4 text-xl font-bold text-neutral-300 tracking-wider">
+                {/* 修改点：分隔线颜色适配 bg-neutral-300 / bg-neutral-700 */}
+                <div class="h-[1px] w-12 bg-neutral-300 dark:bg-neutral-700"></div>
+                {/* 修改点：分类标题颜色适配 text-neutral-500 / text-neutral-300 */}
+                <h2 class="mx-4 text-xl font-bold text-neutral-500 dark:text-neutral-300 tracking-wider">
                   {category}
                 </h2>
-                <div class="h-[1px] w-12 bg-neutral-700"></div>
+                <div class="h-[1px] w-12 bg-neutral-300 dark:bg-neutral-700"></div>
               </div>
 
               {/* 该分类下的产品网格 */}
@@ -105,7 +110,12 @@ const filterButtons = ["全部", ...finalCategories];
                 {productsByCategory[category].map((product) => (
                   <a 
                     href={`/products/${product.id}`} 
-                    class="group relative bg-neutral-900/40 border border-neutral-800 rounded-2xl overflow-hidden transition-all duration-500 hover:translate-y-[-8px] hover:border-blue-500/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.7),0_0_20px_rgba(59,130,246,0.1)]"
+                    /* 修改点：产品卡片背景、边框、阴影适配
+                       - 背景：bg-neutral-50 (明亮) / bg-neutral-900/40 (暗色)
+                       - 边框：border-neutral-200 / border-neutral-800
+                       - 阴影：明亮模式下阴影稍微淡一点
+                    */
+                    class="group relative bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden transition-all duration-500 hover:translate-y-[-8px] hover:border-blue-500/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1),0_0_20px_rgba(59,130,246,0.1)] dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.7),0_0_20px_rgba(59,130,246,0.1)]"
                   >
                     <div class="aspect-[16/10] overflow-hidden relative">
                       <img 
@@ -113,7 +123,8 @@ const filterButtons = ["全部", ...finalCategories];
                         alt={product.data.title}
                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       />
-                      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
+                      {/* 修改点：图片底部渐变适配，明亮模式下使用 from-neutral-50 确保与卡片背景融合 */}
+                      <div class="absolute inset-0 bg-gradient-to-t from-neutral-50/80 dark:from-black/80 via-transparent to-transparent opacity-60" />
                       
                       {/* 左上角分类标 - 仍然保留，作为单个卡片的提示 */}
                       <div class="absolute top-4 left-4">
@@ -124,23 +135,27 @@ const filterButtons = ["全部", ...finalCategories];
                     </div>
 
                     <div class="p-6 relative">
-                      <h3 class="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">
+                      {/* 修改点：卡片标题适配 */}
+                      <h3 class="text-xl font-bold text-neutral-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                         {product.data.title}
                       </h3>
 
                       <div class="flex flex-wrap gap-2 mb-4">
                         {product.data.features && product.data.features.split('|').map((f) => (
-                          <span class="text-[10px] px-2 py-1 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded uppercase">
+                          /* 修改点：特性标签颜色适配，明亮模式下加深文字色 */
+                          <span class="text-[10px] px-2 py-1 bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 rounded uppercase">
                             {f.trim()}
                           </span>
                         ))}
                       </div>
 
-                      <p class="text-neutral-400 text-sm line-clamp-2 mb-6">
+                      {/* 修改点：描述文字适配 */}
+                      <p class="text-neutral-600 dark:text-neutral-400 text-sm line-clamp-2 mb-6">
                         {product.data.description}
                       </p>
 
-                      <div class="flex items-center text-white text-sm font-semibold group/btn">
+                      {/* 修改点：底部按钮文字适配 */}
+                      <div class="flex items-center text-neutral-900 dark:text-white text-sm font-semibold group/btn">
                         了解详情
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2 transition-transform group-hover/btn:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />

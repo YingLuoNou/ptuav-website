@@ -170,11 +170,13 @@ export const Navbar = () => {
     >
       {/* 左侧：Logo */}
       <a href="/" className="flex items-center gap-2 cursor-pointer group">
-        <div className="h-8 w-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg transition-transform group-hover:scale-105 shrink-0">
-          <span className="text-white font-bold text-lg">A</span>
-        </div>
+        <img 
+          src="/logo.png"  // 确保图片放在 public 目录下，或者使用 import 导入
+          alt="Phoenixtech Logo"
+          className="h-8 w-auto transition-transform group-hover:scale-105 shrink-0" 
+        />
         <span className="text-neutral-800 dark:text-white font-bold text-xl tracking-tight hidden md:block">
-          Astro Tech
+          Phoenixtech
         </span>
       </a>
 

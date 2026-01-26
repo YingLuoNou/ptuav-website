@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import { Navbar } from "@/components/Navbar";
 
 // 1. 生成静态路径
 export async function getStaticPaths() {
@@ -19,50 +18,57 @@ const { entry } = Astro.props as { entry: CollectionEntry<"cases"> };
 const { Content } = await render(entry);
 ---
 
-<Layout title={`${entry.data.title} - 客户案例`}>
-  <Navbar client:load />
+<Layout title={`${entry.data.title} - 合作案例`}>
 
-  <article class="min-h-screen bg-black pt-32 pb-20 px-6">
+  {/* 修改点：全局背景色适配，增加 transition-colors 实现平滑切换 */}
+  <article class="min-h-screen bg-white dark:bg-black pt-32 pb-20 px-6 transition-colors duration-300">
     <div class="max-w-4xl mx-auto">
-      
-      {/* 顶部导航面包屑 */}
-      <div class="flex items-center gap-2 text-sm text-neutral-500 mb-8">
-        <a href="/" class="hover:text-white transition-colors">首页</a>
-        <span>/</span>
-        <span class="text-white">客户案例</span>
-      </div>
 
       {/* 案例头部信息 */}
       <div class="mb-12 text-center">
-        <span class="inline-block py-1 px-3 rounded-full bg-blue-500/10 text-blue-400 text-xs font-bold mb-4 border border-blue-500/20">
+        {/* 修改点：标签文字颜色适配 (明亮模式下使用 blue-600) */}
+        <span class="inline-block py-1 px-3 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-bold mb-4 border border-blue-500/20">
           {entry.data.category}
         </span>
-        <h1 class="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+        {/* 修改点：标题颜色适配 */}
+        <h1 class="text-3xl md:text-5xl font-bold text-neutral-900 dark:text-white mb-6 tracking-tight">
           {entry.data.title}
         </h1>
-        <p class="text-xl text-neutral-400 max-w-2xl mx-auto">
+        {/* 修改点：描述颜色适配 */}
+        <p class="text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
           {entry.data.description}
         </p>
       </div>
 
       {/* 案例主图 */}
-      <div class="relative w-full aspect-video mb-12 rounded-2xl overflow-hidden border border-white/10 group">
+      {/* 修改点：容器边框适配 */}
+      <div class="relative w-full aspect-video mb-12 rounded-2xl overflow-hidden border border-neutral-200 dark:border-white/10 group">
         <img 
           src={entry.data.image} 
           alt={entry.data.title} 
           class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
+        {/* 保持黑色渐变遮罩，以营造电影感，不随主题改变 */}
         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
       </div>
 
       {/* 正文内容区 */}
-      <div class="prose prose-invert prose-lg max-w-none text-neutral-300">
+      {/* 修改点：
+         - prose: 启用明亮模式默认排版
+         - dark:prose-invert: 启用暗色模式反色排版
+         - text-neutral-600 / dark:text-neutral-300: 显式定义正文基础颜色
+      */}
+      <div class="prose dark:prose-invert prose-lg max-w-none text-neutral-600 dark:text-neutral-300">
         <Content />
       </div>
 
       {/* 底部行动号召 */}
-      <div class="mt-20 pt-10 border-t border-neutral-800 text-center">
-        <h3 class="text-2xl font-bold text-white mb-4">准备好实现类似的增长了吗？</h3>
+      {/* 修改点：顶部边框适配 */}
+      <div class="mt-20 pt-10 border-t border-neutral-200 dark:border-neutral-800 text-center">
+        {/* 修改点：标题适配 */}
+        <h3 class="text-2xl font-bold text-neutral-900 dark:text-white mb-4">准备好实现类似的增长了吗？</h3>
+        
+        {/* 按钮保持原样：黑色背景的 Shimmer 按钮在明亮模式下作为强调色（Primary Button）同样美观且高对比 */}
         <a href="/contact" class="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
           联系我们咨询方案
         </a>
