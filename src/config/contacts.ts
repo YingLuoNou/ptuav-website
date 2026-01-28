@@ -12,7 +12,7 @@ export const CONTACT_CONFIG = [
   },
   {
     platform: "手机",
-    address: "17866788683",
+    address: "",
     svg: `<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"></path><path d="M3 7l9 6l9 -6"></path></svg>`
   }
 ];
