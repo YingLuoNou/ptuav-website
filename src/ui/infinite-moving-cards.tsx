@@ -9,9 +9,10 @@ export const InfiniteMovingCards = ({
   className,
 }: {
   items: {
-    quote: string;
+    quote?: string; // 修改：改为可选
     name: string;
-    title: string;
+    title?: string; // 修改：改为可选
+    image: string;  // 修复：添加 image 字段定义
   }[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
