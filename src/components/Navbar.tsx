@@ -336,6 +336,11 @@ export const Navbar = () => {
                                 <a 
                                   key={subItem.name}
                                   href={subItem.link}
+                                  /* 修复点：添加点击关闭逻辑 */
+                                  onClick={() => {
+                                    setIsMobileMenuOpen(false); // 1. 关闭整个移动端菜单
+                                    setExpandedMobile(null);    // 2. (可选) 重置折叠状态，这样下次打开菜单时是收起状态
+                                  }}
                                   className="py-3 px-4 text-sm text-neutral-600 dark:text-neutral-300 hover:text-blue-500 border-b border-neutral-200/50 dark:border-white/5 last:border-0"
                                 >
                                   {subItem.name}

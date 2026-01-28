@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 // 这里使用一个占位图，您可以替换为您实际的产品渲染图
 // 推荐使用：深色背景、发光、等轴测视图(Isometric)的芯片、服务器或数据可视化仪表盘图片
-const heroImage = "/products/test2.png";
+const heroImage = "/products/test2.webp";
 
 export default function HeroSection() {
   return (
