@@ -1,8 +1,6 @@
 // src/content.config.ts
 import { glob } from 'astro/loaders';
 import { defineCollection, z } from 'astro:content';
-import { docsLoader } from '@astrojs/starlight/loaders';
-import { docsSchema } from '@astrojs/starlight/schema';
 
 const products = defineCollection({
   // 使用 glob 加载器，指定匹配模式
@@ -44,14 +42,5 @@ const pages = defineCollection({
   })
 });
 
-const docs = defineCollection({
-  loader: docsLoader(),
-  schema: docsSchema({
-    extend: z.object({
-      // 如果您将来需要扩展文档的 frontmatter，可以在这里加
-      // 例如：author: z.string().optional()
-    }),
-  }),
-});
 
-export const collections = { products, cases, pages, docs };
+export const collections = { products, cases, pages };
